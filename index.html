@@ -24,24 +24,39 @@
 
         <div class="text-center max-w-[900px] mx-auto">
             <h2 class="text-[24px] font-bold">Bringing Families Together ❤️‍🔥 </h2>
-            <h2 class="text-[72px] font-black break-words">Your Path to Adoption Starts Here</h2>
+            <h2 class="md:text-[72px] text-[40px] font-black break-words">Your Path to Adoption Starts Here</h2>
             <p class=" text-base">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a.</p>
             <a href="#adpt_your_friend"  class="btn btn-accent">View More</a>
 
             <div>
                 <img src="./img/pet.webp" alt="" srcset="">
             </div>
-            <div class="max-w-[750px] mx-auto " id="adpt_your_friend">
-                <h2 class="text-[40px] font-black">Adopt Your Best Friend</h2>
+            <div class="max-w-[750px] mx-auto my-4" id="adpt_your_friend">
+                <h2 class="md:text-[40px] text-[30px] font-black">Adopt Your Best Friend</h2>
                 <p class=" text-base">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a.</p>
-                <button>Learn More</button>
             </div>
-            <div  id="pet-category-container" class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-2">
-            </div>
-        
-            </div>
-            <div id="pet-list-container" class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2  my-4">
+           
         </div>
+        <div  id="pet-category-container" class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-2 items-center">
+            <!-- Pet Category List -->
+        </div>
+        <div class="flex justify-between items-center my-4">
+                <h2 class="text-[24px]">Best Deal For Your</h2>
+                <button onclick="handleShortButton()" class="btn btn-accent bg-[#0E7A81] text-white px-6 py-2">Sort by Price</button>
+        </div>
+
+        <div id="pet-list-container" class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2  my-4">
+            <!-- Pet List -->
+    </div>
+
+
+    <!-- error page show -->
+    <div id="pet-list-error">
+    </div>
+        </div>
+        
+
+        
     </div>
 </body>
     <script src="./js/petadopt.js"></script>
