@@ -13,6 +13,7 @@ const petlistcontainer = setElementById('pet-list-container')
 const petlisterror = setElementById('pet-list-error')
 let activeCategory = null;
 let pets = [];
+let isLowToHigh = true; 
 
 const LoadCategory = ()=> {
     const uri = 'https://openapi.programming-hero.com/api/peddy/categories'
@@ -122,11 +123,24 @@ const DisplayPetsData = (pets)=> {
 
 }
 
-function handleSortButton() {
+function handleToggleSortByPrice() {
 
-    pets.sort((a, b) => a.price - b.price);  // Sort by price in ascending order
+
+    // Toggle the sorting order
+    isLowToHigh = !isLowToHigh;
+
+    if (isLowToHigh) {
+        pets.sort((a, b) => a.price - b.price);  // Low to high
+        document.getElementById('sortbtn').textContent = 'Sort by Price (Low to High)';
+    }else {
+        pets.sort((a, b) => b.price - a.price);  // High to low
+        document.getElementById('sortbtn').textContent = 'Sort by Price (High to Low)';
+      }
     DisplayPetsData(pets);  // Update the displayed list after sorting
  
-  }
+}
+
+
+
 LoadPets();
 LoadCategory();
