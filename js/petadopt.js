@@ -12,6 +12,7 @@ const petcategorycontainer = setElementById('pet-category-container')
 const petlistcontainer = setElementById('pet-list-container')
 const petlisterror = setElementById('pet-list-error')
 let activeCategory = null;
+let pets = [];
 
 const LoadCategory = ()=> {
     const uri = 'https://openapi.programming-hero.com/api/peddy/categories'
@@ -38,6 +39,8 @@ const DisplayCategory = (data) => {
 };
 
 
+
+
 const handleCategoryFetch = (category, button) => {
     // Handle active category style
     if (activeCategory) {
@@ -49,24 +52,30 @@ const handleCategoryFetch = (category, button) => {
     // Fetch pets data based on category
     fetch(`https://openapi.programming-hero.com/api/peddy/category/${category}`)
         .then(response => response.json())
-        .then(data => DisplayPetsData(data.data));
+        .then(data => {
+            pets = data.data;
+            DisplayPetsData(pets);
+        });
 };
 
 
-const LoadPets = ()=> {
-    const uri = 'https://openapi.programming-hero.com/api/peddy/pets'
-    fetch(uri)
-    .then(response => response.json())
-    .then(data => 
-    {
-        DisplayPetsData(data.pets)
-    }
-    )
+const LoadPets = async ()=> {
+    try {
+        const response = await fetch('https://openapi.programming-hero.com/api/peddy/pets');
+        const data = await response.json();
+        pets = data.pets;  // Assuming the response contains a 'pets' array
+        DisplayPetsData(pets);
+      } catch (error) {
+        console.error('Error fetching pets data:', error);
+      }
 }
-const DisplayPetsData = (data)=> {
-    
+
+
+
+const DisplayPetsData = (pets)=> {
+    console.log(pets)
     // Clear the container before appending new data
-    if(!data.length){
+    if(!pets.length){
         petlistcontainer.innerHTML = '';
         petlisterror.innerHTML = `
             <div class="text-center min-h-[500px] max-w-full mx-auto bg-gray-200 flex justify-center items-center ">
@@ -81,16 +90,14 @@ const DisplayPetsData = (data)=> {
         </div>
         
         `
-        petlisterror.appendChild(div)
     }
     else{
         petlistcontainer.innerHTML = '';
-    data.forEach(pet => {
+        petlisterror.innerHTML = '';
+        pets.forEach(pet => {
 
         const div = document.createElement('div')
         div.innerHTML = `
-    
-                        
                         <div class="card border bg-base-100 hover:shadow-xl transition-all duration-700">
                     <figure class="px-5 pt-5">
                       <img
@@ -115,30 +122,11 @@ const DisplayPetsData = (data)=> {
 
 }
 
-// sort button add event listener
-const handleShortButton = () => {
+function handleSortButton() {
 
-    // get current cards than sort by date of birth
-    const petlistcontainer = setElementById('pet-list-container');
-    const pets = [...petlistcontainer.children];
-    console.log(pets)
-
-   
-    //   pets.sort((a, b) => {
-    //   const aDate = a.childNodes[0].nodeValue;
-    //   const bDate = b.childNodes[0].nodeValue;;
-    //   console.log(aDate, bDate)
-    //   return aDate - bDate;
-    // });
-  
-  
-    // again add sorted card in the container
-    const cardsContainer = document.getElementById("card-container");
-    cardsContainer.innerHTML = "";
-    pets.forEach((card) => cardsContainer.appendChild(card));
-  
+    pets.sort((a, b) => a.price - b.price);  // Sort by price in ascending order
+    DisplayPetsData(pets);  // Update the displayed list after sorting
+ 
   }
-
-
 LoadPets();
 LoadCategory();
